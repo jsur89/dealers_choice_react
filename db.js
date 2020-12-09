@@ -4,7 +4,7 @@ const conn = new Sequelize(
   process.env.DATABASE_URL || "postgresql://localhost/todo"
 );
 
-//Setting up our data model
+//DATA MODEL SET UP
 //1st arg is a string that labels the table, 2nd arg is an object
 const Todo = conn.define("todo", {
   name: { type: STRING },
@@ -15,20 +15,29 @@ const Todo = conn.define("todo", {
   },
   description: { type: STRING },
 });
-
+//==================================
+//SYNC & SEED
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
   const [clean, exercise, sleep] = await Promise.all([
-    Todo.create({ name: "clean", priority: "Low" }),
-    Todo.create({ name: "exercise", priority: "Medium" }),
-    Todo.create({ name: "sleep", priority: "High" }),
+    Todo.create({
+      name: "clean",
+      priority: "Low",
+      description: "Clean bedroom",
+    }),
+    Todo.create({
+      name: "exercise",
+      priority: "Medium",
+      description: "Run 3 miles",
+    }),
+    Todo.create({
+      name: "sleep",
+      priority: "High",
+      description: "Sleep 7 hours",
+    }),
   ]);
 };
-//Columns to include in the database table
-//name
-//completed
-//priority
-//description
+//==================================
 const init = async () => {
   try {
     await conn.authenticate();
