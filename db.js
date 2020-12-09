@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const { STRING, ENUM, BOOLEAN } = Sequelize;
 const conn = new Sequelize(
-  process.env.DATABASE_URL || "postgress://localhost/todo"
+  process.env.DATABASE_URL || "postgresql://localhost/todo"
 );
 
 //Setting up our data model
@@ -15,12 +15,13 @@ const Todo = conn.define("todo", {
   },
   description: { type: STRING },
 });
+
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
-  const [clean, exercise, sleep] = await Promoise.all([
-    Todo.create({ name: "clean" }),
-    Todo.create({ name: "exercise" }),
-    Todo.create({ name: "sleep" }),
+  const [clean, exercise, sleep] = await Promise.all([
+    Todo.create({ name: "clean", priority: "Low" }),
+    Todo.create({ name: "exercise", priority: "Medium" }),
+    Todo.create({ name: "sleep", priority: "High" }),
   ]);
 };
 //Columns to include in the database table

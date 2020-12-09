@@ -10,12 +10,12 @@ class App extends Component {
       loading: true,
     };
   }
-  async componentDidMount() {
-    this.setState({
-      users: (await axios.get("/api/users")).data,
-      loading: false,
-    });
-  }
+  // async componentDidMount() {
+  //   this.setState({
+  //     users: (await axios.get("/api/users")).data,
+  //     loading: false,
+  //   });
+  // }
   render() {
     const { users, loading } = this.state;
     if (loading) {
